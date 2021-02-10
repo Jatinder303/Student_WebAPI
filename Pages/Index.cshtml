@@ -2,3 +2,270 @@
 @model Student_WebAPI.Pages.IndexModel
 @{
 }
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Student API</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body style="background-color:bisque;">
+
+    <div>
+        <!-- Navigation bar code -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-warning">
+            <a class="navbar-brand" href="#">Student Data</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <button class="btn btn-outline-dark" data-toggle="modal" data-target="#addStudent">Add New Student</button>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- following division is creating main area of the web page where all books data will display -->
+        <div class="container">
+            <div class="row" id="allStudents">
+            </div>
+        </div>
+    </div>
+
+    <!-- below mentioned code will create the template to add a new book -->
+    <div class="modal" tabindex="-1" role="dialog" id="addStudent">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Students</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="Student_Name">Student Name</label>
+                            <input type="text" class="form-control" id="student_Name" aria-describedby="Student_NameHelp" placeholder="Enter Student Name">
+
+                        </div>
+                        <div class="form-group">
+                            <label for="Email">Email</label>
+                            <input type="text" class="form-control" id="student_Email" aria-describedby="EmailHelp" placeholder="Enter Student Email">
+
+                        </div>
+                        <div class="form-group">
+                            <label for="Mobile">Mobile</label>
+                            <input type="text" class="form-control" id="student_Mobile" aria-describedby="MobileHelp" placeholder="Enter Student Mobile Number">
+                        </div>
+                        <div class="form-group">
+                            <label for="Course_Name">Course Name</label>
+                            <input type="text" class="form-control" id="course_Name" aria-describedby="course_NameHelp" placeholder="Enter Name of the Course">
+                        </div>
+                        <div class="form-group">
+                            <label for="Course_Duration">Course Duration</label>
+                            <input 0. class="form-control" id="course_Duration" aria-describedby="course_DurationHelp" placeholder="Enter the length of the Course">
+                        </div>
+                        <div class="form-group" id="result">
+
+
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="addStudent()">Add Student</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- below mentioned code will create the template to Update a new book -->
+    <div class="modal" tabindex="-1" role="dialog" id="UpdateStudents">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Update Student Data</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="Update_id" aria-describedby="IdHelp">
+                        </div>
+                        <div class="form-group">
+                            <label for="Student_Name">Student Name</label>
+                            <input type="text" class="form-control" id="Update_student_Name" aria-describedby="Student_NameHelp">
+                        </div>
+                        <div class="form-group">
+                            <label for="Email">Email</label>
+                            <input type="text" class="form-control" id="Update_student_Email" aria-describedby="EmailHelp">
+                        </div>
+                        <div class="form-group">
+                            <label for="Mobile">Mobile</label>
+                            <input type="text" class="form-control" id="Update_student_Mobile" aria-describedby="MobileHelp">
+                        </div>
+                        <div class="form-group">
+                            <label for="Course_Name">Course Name</label>
+                            <input type="text" class="form-control" id="Update_course_Name" aria-describedby="course_NameHelp">
+                        </div>
+                        <div class="form-group">
+                            <label for="Course_Duration">Course Duration</label>
+                            <input 0. class="form-control" id="Update_course_Duration" aria-describedby="course_DurationHelp">
+                        </div>
+                        <div class="form-group" id="update_result">
+
+
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="updateStudent()">Update</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <! -- java script files that will help to link the front end and back end -->
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <script>
+        var uri = 'api/Students';
+        //Java script main function so JS start from here
+        $(document).ready(function () {
+            $.getJSON(uri)
+                .done(function (data) {
+                    $("#StudentsTemplate").tmpl(data).appendTo("#allStudents");
+                });
+        });
+        // function to get all students data and show on web page
+        function getAllStudents() {
+            $.getJSON(uri)
+                .done(function (data) {
+                    $("#allStudents").text("");
+                    $("#StudentsTemplate").tmpl(data).appendTo("#allStudents");
+                });
+        }
+
+        // function to add data for new student
+        function addStudent() {
+            var _student_Name = $('#student_Name').val();
+            var _student_Email = $('#student_Email').val();
+            var _student_Mobile = $('#student_Mobile').val();
+            var _course_Name = $('#course_Name').val();
+            var _course_Duration = $('#course_Duration').val();
+            var Student = {
+                student_Name: _student_Name,
+                student_Email: _student_Email,
+                student_Mobile: _student_Mobile,
+                course_Name: _course_Name,
+                course_Duration: _course_Duration
+            };
+            $.ajax({
+                type: "POST",
+                url: uri,
+                data: JSON.stringify(Student),
+                contentType: "application/json; charset=utf-8"
+            }).done(function (response) {
+                $("#result").html("New Student data is added successfully");
+                getAllStudents();
+            }).fail(function (jqXHR, textStatus) {
+                $("#result").html("An error occured when Adding the student record.");
+            });
+        }
+
+        //funtion to delete a particular student based on id
+        function remove(id) {
+            var yes = confirm("Are you sure you want to delete this student?");
+            if (yes) {
+                $.ajax({
+                    type: "DELETE",
+                    url: uri + "/" + id,
+                }).done(function (response) {
+                    $("#result").html("Student data is deleted successfully");
+                    getAllStudents();
+                }).fail(function (jqXHR, textStatus) {
+                    $("#result").html("An error occured when deleting the student record.");
+                });
+            }
+        }
+
+        // funtion to fill the data into update template
+        function getStudentForUpdate(id) {
+            $.ajax({
+                type: "GET",
+                url: uri + "/" + id,
+                contentType: "application/json"
+            }).done(function (response) {
+                $('#Update_id').val(response.id);
+                $('#Update_student_Name').val(response.student_Name);
+                $('#Update_student_Email').val(response.student_Email);
+                $('#Update_student_Mobile').val(response.student_Mobile);
+                $('#Update_course_Name').val(response.course_Name);
+                $('#Update_course_Duration').val(response.course_Duration);
+            });
+        }
+        // function to update data of the student
+        function updateStudent() {
+            var _student_Name = $('#Update_student_Name').val();
+            var _student_Email = $('#Update_student_Email').val();
+            var _student_Mobile = $('#Update_student_Mobile').val();
+            var _course_Name = $('#Update_course_Name').val();
+            var _course_Duration = $('#Update_course_Duration').val();
+            var StudentUpdate = {
+                id: parseInt($('#Update_id').val()),
+                student_Name: _student_Name,
+                student_Email: _student_Email,
+                student_Mobile: _student_Mobile,
+                course_Name: _course_Name,
+                course_Duration: _course_Duration
+            };
+            $.ajax({
+                type: "PUT",
+                url: uri + "/" + $('#Update_id').val(),
+                data: JSON.stringify(StudentUpdate),
+                contentType: "application/json; charset=utf-8"
+            }).done(function (response) {
+                $("#update_result").html("Record is updated Successfully");
+                getAllStudents();
+            }).fail(function (jqXHR, textStatus) {
+                $("#update_result").html("An error occured when updating student record.");
+            });
+        }
+
+
+    </script>
+
+    <!-- below mentioned code will create the template on the web page to display all books -->
+    <script id="StudentsTemplate" type="text/x-jquery-tmpl">
+        <div class="col-lg-3" style="margin:10px;">
+            <div class="card card text-white bg-dark border-warning mb-3" style="width: 18rem; padding:20px">
+                <div class="card-body">
+                    <h5 class="card-title">Student Name: ${student_Name}</h5>
+                    <p class="card-text">Email :  ${student_Email}</p>
+                    <p class="card-text">Mobile : ${student_Mobile}</p>
+                    <p class="card-text">Course Name : ${course_Name}</p>
+                    <p class="card-text">Course Duration : ${course_Duration}</p>
+                </div>
+                <span>
+                    <button class="btn btn-primary" onclick="getStudentForUpdate('${id}')" data-toggle="modal" data-target="#UpdateStudents">Update</button>
+                    <a href="#" class="btn btn-danger" onclick="remove('${id}')">Delete</a>
+                </span>
+            </div>
+        </div>
+    </script>
+</body>
+</html>
